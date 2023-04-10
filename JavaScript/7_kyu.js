@@ -110,9 +110,9 @@ function sumTwoSmallestNumbers(numbers) {
 // }
 
 // by C_W
-function highAndLow(numbers){
-  numbers = numbers.split(' ');
-  return `${Math.max(...numbers)} ${Math.min(...numbers)}`;
+function highAndLow(numbers) {
+    numbers = numbers.split(' ');
+    return `${Math.max(...numbers)} ${Math.min(...numbers)}`;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -133,11 +133,11 @@ function highAndLow(numbers){
 function rowSumOddNumbers(n) {
     let value = 1;
     for (let i = 1; i < n; i++) {
-        for (let j = 1; j <= i; j++){
+        for (let j = 1; j <= i; j++) {
             value += 2
         }
     }
-    return value * (n+1) - 1
+    return value * (n + 1) - 1
 }
 
 
@@ -157,3 +157,116 @@ function rowSumOddNumbers(n) {
 // }
 
 // console.log(rowSumOddNumbers(42))
+
+//----------------------------------------------------------------------------------------------------------------------
+
+// (6) 7_kyu
+
+// Write a function that takes an array of strings as an argument and returns a sorted array containing
+// the same strings, ordered from shortest to longest.
+// All of the strings in the array passed to your function will be different lengths, so you will not have to
+// decide how to order multiple strings of the same length.
+
+function sortByLength(array) {
+    return array.sort((a, b) => a.length - b.length)
+}
+
+// console.log(sortByLength(["Telescopes", "Glasses", "Eyes", "Monocles"]))
+
+//----------------------------------------------------------------------------------------------------------------------
+
+// (7) 7_kyu
+
+// Complete the function power_of_two/powerOfTwo (or equivalent, depending on your language) that determines
+// if a given non-negative integer is a power of two. From the corresponding Wikipedia entry:
+// a power of two is a number of the form 2n where n is an integer, i.e. the result of exponentiation with
+// number two as the base and integer n as the exponent.
+// You may assume the input is always valid.
+// Beware of certain edge cases - for example, 1 is a power of 2 since 2^0 = 1 and 0 is not a power of 2.
+// isPowerOfTwo(1024) // -> true
+// isPowerOfTwo(4096) // -> true
+// isPowerOfTwo(333)  // -> false
+
+function isPowerOfTwo(n) {
+    return Number.isInteger(Math.log2(n))
+}
+
+// console.log(isPowerOfTwo(1024));
+
+//----------------------------------------------------------------------------------------------------------------------
+
+// (8) 7_kyu
+
+// Dot Calculator
+// You have to write a calculator that receives strings for input. The dots will represent the number in the equation.
+// There will be dots on one side, an operator, and dots again after the operator. The dots and the operator
+// will be separated by one space.
+// Here are the following valid operators :
+// + Addition
+// - Subtraction
+// * Multiplication
+// // Integer Division
+// You'll have to return a string that contains dots, as many the equation returns. If the result is 0,
+// return the empty string. When it comes to subtraction, the first number will always be greater than or equal
+// to the second number.
+// * "..... // ."              => "....."
+// * ". // .."                 => ""
+// * ".. - .."                 => ""
+
+// My func
+function dotCalculator(equation) {
+    let arr = equation.split(' ');
+    let res = 0;
+    if (arr[1] === '+') {
+        res = (arr[0].length + arr[2].length);
+    } else if (arr[1] === '-') {
+        res = (arr[0].length - arr[2].length);
+    } else if (arr[1] === '*') {
+        res = (arr[0].length * arr[2].length);
+    } else if (arr[1] === '//') {
+        res = Math.floor(arr[0].length / arr[2].length);
+    }
+    return '.'.repeat(res);
+}
+
+// from C_W
+// const dotCalculator = (equation) => {
+//   const operations = {
+//     '+' : (a, b) => a + b,
+//     '-' : (a, b) => a - b,
+//     '*' : (a, b) => a * b,
+//     '//': (a, b) => a / b,
+//   };
+//   const [left, operator, right] = equation.split(' ');
+//   return '.'.repeat(operations[operator](left.length, right.length));
+// }
+
+// console.log(dotCalculator("..... // .."))
+
+//----------------------------------------------------------------------------------------------------------------------
+
+// (9) 7_kyu
+
+// Write a small function that returns the values of an array that are not odd.
+// All values in the array will be integers. Return the good values in the order they are given.
+
+function noOdds( values ){
+  return values.filter(value => !(value % 2))
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+
+// (10) 7_kyu
+
+// Given an array of numbers, return the difference between the largest and smallest values.
+// For example:
+// [23, 3, 19, 21, 16] should return 20 (i.e., 23 - 3).
+// [1, 434, 555, 34, 112] should return 554 (i.e., 555 - 1).
+// The array will contain a minimum of two elements. Input data range guarantees that max-min will cause no
+// integer overflow.
+
+function betweenExtremes(numbers) {
+    return Math.max(...numbers) - Math.min(...numbers)
+}
+
+// console.log(betweenExtremes([1, 434, 555, 34, 112]))

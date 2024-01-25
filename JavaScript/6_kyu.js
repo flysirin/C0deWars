@@ -98,3 +98,4 @@ let strarr_2 = ["zone", "abigail", "theta", "form", "libe", "zas"]
 
 // console.log(longestConsec(strarr, k));
 // console.log(longestConsec(strarr_2, k));
+// quests

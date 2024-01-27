@@ -54,25 +54,78 @@
 # методы сравнения. Здесь вы сами решаете какие магические методы реализовывать, главное чтобы прямоугольники
 # могли сравниваться с числами и между собой по значению площади. Используйте декоратор @total_ordering
 
-from functools import total_ordering
+# from functools import total_ordering
+#
+#
+# @total_ordering
+# class Rectangle:
+#     def __init__(self, width, height):
+#         self.width = width
+#         self.height = height
+#
+#     @property
+#     def area(self):
+#         return self.height * self.width
+#
+#     def __eq__(self, other):
+#         if isinstance(other, (int, float)):
+#             return self.area == other
+#         return self.area == other.area
+#
+#     def __lt__(self, other):
+#         if isinstance(other, (int, float)):
+#             return self.area < other
+#         return self.area < other.area
 
 
-@total_ordering
-class Rectangle:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
+# ----------------------------------------------------------------------------------------------------------------------
 
-    @property
-    def area(self):
-        return self.height * self.width
+# (4)
 
-    def __eq__(self, other):
-        if isinstance(other, (int, float)):
-            return self.area == other
-        return self.area == other.area
+# Ваша задача дописать классы BankAccount и Numbers таким образом, чтобы их экземпляры могли участвовать в операции
+# сложения с числами и c другими экземплярами классов BankAccount и Numbers
 
-    def __lt__(self, other):
-        if isinstance(other, (int, float)):
-            return self.area < other
-        return self.area < other.area
+
+# class BankAccount:
+#     def __init__(self, name, balance):
+#         self.name = name
+#         self.balance = balance
+#
+#     def __str__(self):
+#         return self.name
+#
+#     def __add__(self, other):
+#         if isinstance(other, (int, float)):
+#             return self.balance + other
+#         if isinstance(other, (BankAccount, Numbers)):
+#             return self.balance + other.balance
+#
+#     def __radd__(self, other):
+#         return self + other
+#
+#
+# class Numbers:
+#     def __init__(self, values: list):
+#         self._values = values
+#
+#     @property
+#     def balance(self):
+#         return sum(self._values)
+#
+#     def __add__(self, other):
+#         if isinstance(other, (int, float)):
+#             return self.balance + other
+#         if isinstance(other, (BankAccount, Numbers)):
+#             return self.balance + other.balance
+#
+#     def __radd__(self, other):
+#         return self + other
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (5)
+
+
+
+
+

@@ -209,3 +209,323 @@
 # (7)
 
 
+# class Card:
+#     def __init__(self, rank, suit):
+#         self.rank = rank
+#         self.suit = suit
+#
+#     def __str__(self):
+#         return f"{self.rank} {self.suit}"  # change
+#
+#
+# class Deck:
+#     ranks = [str(n) for n in range(2, 11)] + list('JQKA')
+#     suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+#
+#     def __init__(self):
+#         self.cards = [Card(rank, suit) for suit in self.suits for rank in self.ranks]
+#         self.inx = 0
+#
+#     def __iter__(self):             # change
+#         return iter(self.cards)
+#
+#     # def __next__(self):
+#     #     if self.inx >= len(self.cards):
+#     #         raise StopIteration
+#     #     self.inx += 1
+#     #     return f"{self.cards[self.inx - 1].rank} {self.cards[self.inx - 1].suit}"
+#
+#
+# deck = Deck()
+# for card in deck:
+#     print(card)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (8)
+# Ниже в коде представлена реализация класса FileReader, который должен при итерирации считывать построчно содержимое файла
+# Ваша задача дописать метод __next__, чтобы он возвращал по порядку строки из файла, пока содержимое файла не закончится. Строку нужно очистить слева и справа от символов пробелов и переносов на новую строку
+
+
+# class FileReader:
+#     def __init__(self, filename):
+#         self.file = open(filename)
+#
+#     def __iter__(self):
+#         return self
+#
+#     def __next__(self):
+#         # new_line = self.file.readline()
+#         # while new_line:
+#         #     return new_line.strip()
+#         # self.file.close()
+#         # raise StopIteration
+#
+#         return next(self.file).strip()  # by default file open in text mode
+#
+#
+# for line in FileReader('lorem.txt'):
+#     print(line)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (9)
+
+# Нужно создать итератор SequenceIterator, который принимает контейнер данных в виде списка в момент инициализации и сохраняет его в атрибуте ЭК
+# SequenceIterable([1, 5, 4, 6, 43, True, 'hello'])
+# При итерации объект SequenceIterator должен  сперва выдать все элементы, находящиеся на четных индексах
+# (0, 2, 4 и т.д), а затем элементы, имеющие нечетные индексы (1, 3, 5 и т.д.)
+
+
+# class SequenceIterator:
+#     def __init__(self, container):
+#         self.container = container
+#         self.indexes = iter(tuple(range(0, len(self.container), 2)) + tuple(range(1, len(self.container), 2)))
+#
+#     def __iter__(self):
+#         return self
+#
+#     def __next__(self):
+#         return self.container[next(self.indexes)]
+
+###
+
+# class SequenceIterator:
+#     def __init__(self, args):
+#         self.args = args
+#
+#     def __iter__(self):
+#         even = self.args[::2]
+#         odd = self.args[1::2]
+#         return iter(even + odd)
+#
+# container = SequenceIterator([1, 5, 4, 6, 43, True, 'hello'])
+# for i in container:
+#     print(i)
+# # # Печатает
+# # 1
+# # 4
+# # 43
+# # hello
+# # 5
+# # 6
+# # True
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (10)
+
+# У вас имеется готовый код класса Stack (см. ниже в блоке кода). Обратите внимание на реализацию метода __iter__
+# def __iter__(self):
+#     return StackIterator(self)
+# Значит класс Stack логику перебора элементов делегирует классу StackIterator. Ваша задача реализовать итератор в
+# классе StackIterator, который обходит элементы стека сверху вниз
+# Необходимо написать только реализацию класса StackIterator
+
+# class StackIterator:
+#     def __init__(self, stack):
+#         self.stack = stack
+#         self.idx = len(self.stack.items)
+#
+#     def __iter__(self):
+#         return self
+#
+#     def __next__(self):
+#         if self.idx <= 0:
+#             raise StopIteration
+#         self.idx -= 1
+#         return self.stack.items[self.idx]
+#
+#
+# class Stack:
+#     def __init__(self):
+#         self.items = []
+#
+#     def push(self, item):
+#         self.items.append(item)
+#
+#     def pop(self):
+#         if len(self.items) == 0:
+#             print("Empty Stack")
+#         else:
+#             return self.items.pop()
+#
+#     def peek(self):
+#         if len(self.items) == 0:
+#             print("Empty Stack")
+#         else:
+#             return self.items[-1]
+#
+#     def is_empty(self):
+#         return len(self.items) == 0
+#
+#     def size(self):
+#         return len(self.items)
+#
+#     def __iter__(self):
+#         return StackIterator(self)
+#
+#
+# stack = Stack()
+#
+# stack.push(100)
+# stack.push(True)
+# stack.push('hello')
+# stack.push('world')
+#
+# # Используем итератор для обхода стека
+# for item in stack:
+#     print(item)
+#
+# # world
+# # hello
+# # True
+# # 100
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (11)
+
+
+# Создайте объект итератор FibonacciIterator, который умеет выдавать последовательность Фибоначчи из n чисел.
+# Число n поступает при инициализации класса FibonacciIterator.
+# Будем считать, что последовательность Фибиначчи следующая: 0, 1, 1, 2, 3, 5, 8, 13, 21 и т.д.
+# Каждое следующее число получается суммой двух предыдущих.
+
+
+# class FibonacciIterator:
+#     def __init__(self, limit):
+#         self.limit = limit
+#         self.counter = 0
+#         self.a, self.b = 0, 1
+#
+#     def __next__(self):
+#         if self.counter >= self.limit:
+#             raise StopIteration
+#         self.b += self.a
+#         self.b, self.a = self.a, self.b
+#         self.counter += 1
+#         return self.b
+#
+#     def __iter__(self):
+#         return self
+#
+#
+# fibonacci_iter = FibonacciIterator(7)
+# for number in fibonacci_iter:
+#     print(number)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (12)
+
+# Представьте, у ,библиотекаря имеется огромная коллекция книг. В какую-то из этих книг он в далекой молодости
+# положил 666 песо и теперь хочет их отыскать. Его внук начал изучать python  и познакомился с концепцией итератора.
+# Предложил обойти все книги по порядку добавления их в библиотеку, и затем для каждой отдельной книги обойти все
+# ее страницы. Но сам это реализовать не смог, просит помочь именно вас.
+# От внука вам досталась реализация классов Book и Library. Класс Library делегирует реализацию итератора
+# классу LibraryIterator
+# def __iter__(self):
+#     return LibraryIterator(...)
+# Вот здесь у внука библиотекаря и возникла проблема. Он не знает, что передавать в LibraryIterator и организовать
+# обход этой коллекции. Помогите внучку, ведь ему еще математику делать на завтра.
+# Необходимо написать только реализацию класса LibraryIterator, который обходит элементы библиотеки согласно примеру,
+# расположенному в коде ниже. Изучите код проверки класса LibraryIterator и ожидаемый вывод
+
+
+# class Book:
+#     def __init__(self, title, pages):
+#         self.title = title
+#         self.pages = pages
+#
+#
+# class Library:
+#     def __init__(self):
+#         self.books = []
+#
+#     def add_book(self, book):
+#         self.books.append(book)
+#
+#     def __iter__(self):
+#         return LibraryIterator(self)  # тут определите, что будете передавать итератору
+#
+#
+# class LibraryIterator:
+#     def __init__(self, lib: Library):
+#         self.lib = lib
+#         self.pages = iter([page for books in self.lib.books for page in books.pages])
+#
+#     def __iter__(self):
+#         return self
+#
+#     def __next__(self):
+#         return next(self.pages)
+#
+#
+#
+# # Пример использования
+# book1 = Book("Book 1", ["Page 1", "Page 2", "Page 3", "Page 4"])
+# book2 = Book("Book 2", ["Page A", "Page B", "Page C"])
+# book3 = Book("Book 3", ["Chapter 1", "Chapter 2"])
+#
+# library = Library()
+# library.add_book(book1)
+# library.add_book(book2)
+# library.add_book(book3)
+#
+# # Используем вложенный итератор для обхода страниц в библиотеке
+# for page in library:
+#     print(page)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (13)
+
+
+# Создайте класс InfinityIterator, который реализует бесконечный итератор. Он должен возвращать элементы
+# арифметической прогрессии с шагом 10. Начальное значение арифметическое прогрессии по умолчанию равно 0,
+# но может быть передано при инициализации класса InfinityIterator.
+# Каждый член арифметической прогрессии равен предыдущему, сложенному с одним и тем же числом d.
+# В нашем случае значение d=10.
+
+
+# class InfinityIterator:
+#     def __init__(self, num=0):
+#         self.num = num
+#
+#     def __iter__(self):
+#         return self
+#
+#     def __next__(self):
+#         curr_num = self.num
+#         self.num += 10
+#         return curr_num
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (14)
+
+# Создайте класс AttributeChecker, который имеет:
+# магический метод __contains__, принимающий имя атрибута и возвращает True, если этот атрибут существует в экземпляре
+# класса, и False в противном случае.
+
+class AttributeChecker:
+    def __contains__(self, item):
+        if item in self.__dict__:
+            return True
+        return False
+
+
+
+
+
+
+
+

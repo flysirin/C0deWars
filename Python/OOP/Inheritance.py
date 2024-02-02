@@ -398,3 +398,259 @@
 # ----------------------------------------------------------------------------------------------------------------------
 
 # (6)
+
+
+# Создайте класс с именем Person, экземпляры которого имеют следующие атрибуты:
+# first_name хранит имя человека в виде строки;
+# last_name строка, хранит фамилию человека в виде строки;
+# age хранит возраст человека в виде целого числа.
+# Переопределите также метод __str__ так, чтобы он возвращал строку
+# {Имя} {Фамилия} is {Возраст} years old
+# Используйте атрибут __slots__ для указания атрибутов, чтобы каждый экземпляр класса использовал только память,
+# необходимую для хранения перечисленных атрибутов.
+
+
+# class Person:
+#     __slots__ = ['first_name', 'last_name', 'age']
+#
+#     def __init__(self, first_name, last_name, age):
+#         self.first_name = first_name
+#         self.last_name = last_name
+#         self.age = age
+#
+#
+#     def __str__(self):
+#         return f"{self.first_name} {self.last_name} is {self.age} years old"
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (7)
+
+# Создайте класс Device, который будет служить базовым классом для всех устройств в доме. Класс "Device" должен иметь
+# "slots" для защищенных атрибутов "_name", "_location" и "_status"(по умолчанию ON). Для атрибут "_name" создайте
+# свойство только для чтения, а для атрибутов "_location" и "_status" - свойства для чтения и записи. Добавьте метод
+# "turn_on" для изменения статуса устройства на "ON" и метод "turn_off" для изменения статуса на "OFF".
+# Создайте класс Light, который будет наследоваться от класса "Device" и представлять устройства освещения. Для этого
+# определите слоты для атрибутов "_brightness" и "_color". Для атрибута "_brightness" создайте свойство для чтения и
+# записи, а для атрибута "_color" - только для чтения.
+# Создайте класс Thermostat, который будет наследоваться от класса "Device" и представлять устройства управления
+# температурой. В классе Thermostat определите слоты для атрибутов "_current_temperature" и "_target_temperature".
+# Оба атрибута должны управляться свойствами для чтения и записи.
+# Создайте класс SmartTV, который будет наследоваться от класса "Device" и представлять устройства для просмотра
+# телевизионных каналов. В классе SmartTV определите слоты для атрибута "_channel". Создайте свойства для управления
+# чтением и записью атрибута _channel.
+
+# class Device:
+#     __slots__ = '_name', '_location', '_status'
+#
+#     def __init__(self, name, location):
+#         self._name = name
+#         self._location = location
+#         self._status = 'ON'
+#
+#     @property
+#     def name(self):
+#         return self._name
+#
+#     @property
+#     def location(self):
+#         return self._location
+#
+#     @location.setter
+#     def location(self, value):
+#         self._location = value
+#
+#     @property
+#     def status(self):
+#         return self._status
+#
+#     @status.setter
+#     def status(self, value):
+#         self._status = value
+#
+#     def turn_on(self):
+#         self._status = 'ON'
+#
+#     def turn_off(self):
+#         self._status = 'OFF'
+#
+#
+# class Light(Device):
+#     __slots__ = "_brightness", "_color"
+#
+#     def __init__(self, name, location,   brightness, color):
+#         super().__init__(name, location)
+#         self._brightness = brightness
+#         self._color = color
+#
+#     @property
+#     def brightness(self):
+#         return self._brightness
+#
+#     @brightness.setter
+#     def brightness(self, value):
+#         self._brightness = value
+#
+#     @property
+#     def color(self):
+#         return self._color
+#
+#
+# class Thermostat(Device):
+#     __slots__ = "_current_temperature", "_target_temperature"
+#
+#     def __init__(self, name, location, temp, targ_temp):
+#         super().__init__(name, location)
+#         self._current_temperature = temp
+#         self._target_temperature = targ_temp
+#
+#     @property
+#     def current_temperature(self):
+#         return self._current_temperature
+#
+#     @current_temperature.setter
+#     def current_temperature(self, value):
+#         self._current_temperature = value
+#
+#     @property
+#     def target_temperature(self):
+#         return self._target_temperature
+#
+#     @target_temperature.setter
+#     def target_temperature(self, value):
+#         self._target_temperature = value
+#
+#
+# class SmartTV(Device):
+#     __slots__ = "_channel"
+#
+#     def __init__(self, name, location, channel):
+#         super().__init__(name, location)
+#         self._channel = channel
+#
+#     @property
+#     def channel(self):
+#         return self._channel
+#
+#     @channel.setter
+#     def channel(self, value):
+#         self._channel = value
+#
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (8)
+
+# Создайте абстрактный класс Employee, имеющий абстрактный метод calculate_salary().
+# Реализуйте два класса HourlyEmployee и SalariedEmployee, унаследованные от Employee, реализующие метод calculate_salary() для расчета заработной платы по часам и окладу соответственно.
+# Класс HourlyEmployee при инициализации должен создавать атрибуты hours_worked и hourly_rate.
+# Класс SalariedEmployee при инициализации должен создавать только атрибут monthly_salary.
+
+# from abc import ABC, abstractmethod
+#
+#
+# class Employee(ABC):
+#
+#     @abstractmethod
+#     def calculate_salary(self):
+#         pass
+#
+#
+# class HourlyEmployee(Employee):
+#     def __init__(self, hour, rate):
+#         self.hours_worked = hour
+#         self.hourly_rate = rate
+#
+#     def calculate_salary(self):
+#         return self.hours_worked * self.hourly_rate
+#
+#
+# class SalariedEmployee(Employee):
+#     def __init__(self, monthly_salary):
+#         self.monthly_salary = monthly_salary
+#
+#     def calculate_salary(self):
+#         return self.monthly_salary
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (9)
+
+
+# Создайте абстрактный класс Database, в котором имеются следующие абстрактные методы:
+# connect
+# disconnect
+# execute
+# Создайте классы MySQLDatabase и PostgreSQLDatabase, которые будут наследовать абстрактный класс Database и реализовывать его абстрактные методы. В каждом классе, должны быть реализованы метод connect для подключения к соответствующей базе данных и метод disconnect для отключения от базы данных, также метод execute, который должен выполнять запрос на соответствующей базе данных.
+# Внутри класса MySQLDatabase:
+# Метод connect должен печатать на экран сообщение Connecting to MySQL database...
+# Метод  disconnect должен печатать на экран сообщение Disconnecting from MySQL database...
+# Метод  execute должен принимать запрос к базе данных в виде строки и печатать на экран сообщение Executing query '{query}' in MySQL database...
+# Внутри класса PostgreSQLDatabase:
+# Метод connect должен печатать на экран сообщение Connecting to PostgreSQL database...
+# Метод  disconnect должен печатать на экран сообщение Disconnecting from PostgreSQL database...
+# Метод  execute должен принимать запрос к базе данных в виде строки и печатать на экран сообщение Executing query '{query}' in PostgreSQL database...
+
+# from abc import  ABC, abstractmethod
+#
+# class Database(ABC):
+#     @abstractmethod
+#     def connect(self):
+#         pass
+#
+#     @abstractmethod
+#     def disconnect(self):
+#         pass
+#
+#     @abstractmethod
+#     def execute(self, query):
+#         pass
+#
+#
+# class MySQLDatabase(Database):
+#     def connect(self):
+#         print('Connecting to MySQL database...')
+#
+#     def disconnect(self):
+#         print('Disconnecting from MySQL database...')
+#
+#     def execute(self, query):
+#         print(f"Executing query '{query}' in MySQL database...")
+#
+#
+# class PostgreSQLDatabase(Database):
+#     def connect(self):
+#         print('Connecting to PostgreSQL database...')
+#
+#     def disconnect(self):
+#         print('Disconnecting from PostgreSQL database...')
+#
+#     def execute(self, query):
+#         print(f"Executing query '{query}' in PostgreSQL database...")
+#
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (10)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

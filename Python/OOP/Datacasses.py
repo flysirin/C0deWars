@@ -37,34 +37,74 @@
 # Также необходимо сортировать всех студентов сперва по стоимости обучения (кто учится бесплатно должны быть первыми),
 # а затем по фамилии и имени.
 
-import random
-import string
-from dataclasses import dataclass, field
+# import random
+# import string
+# from dataclasses import dataclass, field
+#
+# alphabet = string.ascii_uppercase + string.digits
+#
+#
+# def generate_guid():
+#     guid = ''.join(random.choices(alphabet, k=15))
+#     return guid
+#
+#
+# @dataclass(order=True)
+# class Student:
+#     sort_index: tuple = field(init=False, repr=False)
+#     guid: str = field(init=False, repr=False)
+#     first_name: str
+#     last_name: str
+#     tuition: [int, float] = field(default=0, repr=False)
+#     email: str = field(init=False)
+#
+#     def __post_init__(self):
+#         self.guid = generate_guid()
+#         self.email = f"{self.first_name.lower()}.{self.last_name.lower()}@uni.edu"
+#         self.sort_index = self.tuition, self.last_name, self.first_name
 
-alphabet = string.ascii_uppercase + string.digits
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (3)
+
+# Создайте дата-класс Product, который хранит информацию о названии продукта и о его цене. При выводе товара должна
+# отображаться только информация о его имени. Обязательно назовите name атрибут, который хранит название.
+# Цену товара можете назвать как хотите
+# Затем создайте класс продуктовой корзины Cart, в котором должна быть реализована возможность
+# добавлять товары в корзины при помощи метода add_product. Добавляется один продукт за один вызов метода
+# посчитать общую сумму содержащихся товаров в корзине при помощи метода get_total
+# возможность применить скидку через apply_discount. Данный метод должен принимать размер скидки - целое число от 1 до 100,
+# обозначающее % от цены, и сохраняет его в экземпляре класса. Если передать любое другое значение, то нужно вызывать исключение. Данный метод возвращать ничего не должен
+# raise ValueError('Неправильное значение скидки')
+
+# from dataclasses import dataclass, field
+#
+#
+# @dataclass
+# class Product:
+#     name: str
+#     price: [int, float] = field(repr=False)
+#
+#
+# class Cart:
+#     def __init__(self):
+#         self.pieces = []
+#         self.discount = 0
+#
+#     def add_product(self, product):
+#         self.pieces.append(product)
+#
+#     def get_total(self):
+#         return sum(i.price for i in self.pieces) * (1 - self.discount / 100)
+#
+#     def apply_discount(self, val: int):
+#         if type(val) != int or not (1 <= val <= 100):
+#             raise ValueError('Неправильное значение скидки')
+#         self.discount = val
 
 
-def generate_guid():
-    guid = ''.join(random.choices(alphabet, k=15))
-    return guid
+# ----------------------------------------------------------------------------------------------------------------------
 
+# (4)
 
-@dataclass(order=True)
-class Student:
-    sort_index: tuple = field(init=False, repr=False)
-    guid: str = field(init=False, repr=False)
-    first_name: str
-    last_name: str
-    tuition: [int, float] = field(default=0, repr=False)
-    email: str = field(init=False)
-
-    def __post_init__(self):
-        self.guid = generate_guid()
-        self.email = f"{self.first_name.lower()}.{self.last_name.lower()}@uni.edu"
-        self.sort_index = self.tuition, self.last_name, self.first_name
-
-jane = Student('Jane', 'Lee')
-julia = Student('Julia', 'Doe')
-jake = Student('Jake', 'Langdon')
-joy = Student('Joy', 'Smith')
-print(*sorted([jane, julia, jake, joy]), sep='\n')

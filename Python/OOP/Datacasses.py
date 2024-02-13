@@ -108,3 +108,152 @@
 
 # (4)
 
+# Пришли сотрудники отдела продаж и решили добавить возможность работы продуктовой корзины с промокодами
+#  Для этого нужно создать дата-класс Promo, который содержит код промокода и значение его скидки.
+# Проверьте, чтобы значение скидки было целым числом и находилось в пределах от 1 до 100, обозначает % от цены.
+# При всех остальных значениях будем считать, что промокод не дает скидку (как вариант,  можете указать, что значение
+# скидки составляет 0)
+# Далее вам понадобиться добавить метод apply_promo в классе Cart, который получает на вход код промокода и заведен
+# ли в переменной ACTIVE_PROMO промокод с таким названием. Если существует, то необходимо применить его номинал к
+# корзине товаров. Сам метод apply_promo ничего не возвращает, только печатает текст "Промокод <promo> успешно
+# применился" или "Промокода <promo> не существует"
+# А вот при вызове метода get_total должен учитываться промокод или скидка, если они были применены.
+# Примечание: промокод нельзя использоваться вместе со скидкой. Используется последнее значение, которое применилось.
+
+#
+# from dataclasses import dataclass, field
+#
+#
+# @dataclass
+# class Product:
+#     name: str
+#     price: [int, float] = field(repr=False)
+#
+#
+# @dataclass
+# class Promo:
+#     code: str
+#     percent: [int, float] = 0
+#
+#
+# class Cart:
+#     def __init__(self):
+#         self.pieces = []
+#         self.discount = 0
+#
+#     def add_product(self, product):
+#         self.pieces.append(product)
+#
+#     def get_total(self):
+#         return sum(i.price for i in self.pieces) * (1 - self.discount / 100)
+#
+#     def apply_discount(self, val: int):
+#         if type(val) != int or not (1 <= val <= 100):
+#             raise ValueError('Неправильное значение скидки')
+#         self.discount = val
+#
+#     def apply_promo(self, code):
+#         for promo in ACTIVE_PROMO:
+#             if code == promo.code:
+#                 self.discount = promo.percent
+#                 print(f"Промокод {code} успешно применился")
+#                 return
+#         print(f"Промокода {code} не существует")
+#
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# (5)
+
+# Сотрудники отдела продаж придумали новый тип промокода и хотят, чтобы вы его добавили. Идея его заключается в том,
+# что он распространяется только на определенные товары в корзине.
+# Для этого вам нужно доработать дата-класс Promo, чтобы он мог принимать список товаров, на который будет
+# распространяться промокод. Если список товаров не передать при создании, то данный промокод применяется ко всей корзине целиком.
+# Также необходимо доработать метод add_product в классе Cart. Необходимо добавить возможность передавать в него
+# количество товара, которое добавляется в корзину. Например, строка
+# cart.add_product(product1, 5)
+# говорит о том, что нужно добавить в корзину 5 единиц товара product1. Если не передавать количество
+# cart.add_product(product1)
+# то нужно считать, что добавили одну единицу товара.
+# Вся остальная реализация остается из предыдущего задания.
+
+
+from dataclasses import dataclass, field
+
+
+@dataclass
+class Product:
+    name: str
+    price: [int, float] = field(repr=False)
+
+
+@dataclass
+class Promo:
+    code: str
+    percent: [int, float] = 0
+    product: list = field(default=None)
+
+
+class Cart:
+    def __init__(self):
+        self.products = []
+        self.discount = 0
+        self.promo_flag = False
+        self.promo = None
+
+    def add_product(self, product, count=1):
+        for i in range(count):
+            self.products.append(product)
+
+    def get_total(self):
+        if not self.promo_flag or not self.promo.product:
+            return sum(i.price for i in self.products) * (1 - self.discount / 100)
+        total_sum = 0
+        for product in self.products:
+            if product in self.promo.product:
+                total_sum += product.price * (1 - self.discount / 100)
+            else:
+                total_sum += product.price
+        return total_sum
+
+    def apply_discount(self, val: int):
+        if type(val) != int or not (1 <= val <= 100):
+            raise ValueError('Неправильное значение скидки')
+        self.promo_flag = False
+        self.discount = val
+
+    def apply_promo(self, code):
+        for promo in ACTIVE_PROMO:
+            if code == promo.code:
+                self.discount = promo.percent
+                self.promo_flag = True
+                self.promo = promo
+                print(f"Промокод {code} успешно применился")
+                return
+        print(f"Промокода {code} не существует")
+
+
+
+book = Product('Книга', 100.0)
+usb = Product('Флешка', 50.0)
+pen = Product('Ручка', 10.0)
+
+ACTIVE_PROMO = [
+    Promo('new', 20, [pen]),
+    Promo('all_goods', 30),
+    Promo('sale', 50, [book, usb]),
+]
+
+cart = Cart()
+cart.add_product(book, 10)
+cart.add_product(pen)
+cart.add_product(book, 5)
+cart.add_product(usb, 5)
+cart.add_product(usb, 15)
+cart.add_product(pen, 2)
+
+print(cart.get_total())
+
+# Применение промокода в 50% на книги и флешки
+cart.apply_promo('sale')
+print(cart.get_total())  # 1280.0

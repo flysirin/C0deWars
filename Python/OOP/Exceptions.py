@@ -6,30 +6,30 @@
 # исключение InsufficientFundsError("Недостаточно средств для снятия")
 # Исключения NegativeDepositError и InsufficientFundsError вам также необходимо создать
 
-class NegativeDepositError(Exception):
-    def __str__(self):
-        return "Нельзя пополнить счет отрицательным значением"
-
-
-class InsufficientFundsError(Exception):
-    def __str__(self):
-        return "Недостаточно средств для снятия"
-
-
-class BankAccount:
-    def __init__(self, balance):
-        self.balance = balance
-
-    def deposit(self, val):
-        if val < 0:
-            raise NegativeDepositError
-        self.balance += val
-
-    def withdraw(self, val):
-        if self.balance - val < 0:
-            raise InsufficientFundsError
-        self.balance -= val
-
+# class NegativeDepositError(Exception):
+#     def __str__(self):
+#         return "Нельзя пополнить счет отрицательным значением"
+#
+#
+# class InsufficientFundsError(Exception):
+#     def __str__(self):
+#         return "Недостаточно средств для снятия"
+#
+#
+# class BankAccount:
+#     def __init__(self, balance):
+#         self.balance = balance
+#
+#     def deposit(self, val):
+#         if val < 0:
+#             raise NegativeDepositError
+#         self.balance += val
+#
+#     def withdraw(self, val):
+#         if self.balance - val < 0:
+#             raise InsufficientFundsError
+#         self.balance -= val
+#
 
 # ----------------------------------------------------------------------------------------------------------------------
 
